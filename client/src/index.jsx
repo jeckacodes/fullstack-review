@@ -10,7 +10,10 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
+  }
 
+  componentDidMount () {
+    this.get();
   }
 
   search (term) {
@@ -20,7 +23,22 @@ class App extends React.Component {
       url: '/repos',
       data: {term: term}
     })
-    .done((msg) => console.log('search sent to server', msg));
+    .done((msg) => {
+      console.log('search sent to server', msg);
+      this.get();
+    });
+  }
+
+  get () {
+    console.log('fetching top 25');
+    $.ajax({
+      method: 'GET',
+      url: '/repos'
+    })
+    .done((msg) => {
+      console.log('here\'s data', msg);
+      this.setState({ repos: msg});
+    });
   }
 
   render () {
