@@ -26,6 +26,10 @@ class App extends React.Component {
     .done((msg) => {
       console.log('search sent to server', msg);
       this.get();
+    })
+    .fail((msg) => {
+      console.log(msg)
+      // alert(msg.errors[0].message);
     });
   }
 
